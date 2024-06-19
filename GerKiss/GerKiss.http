@@ -1,0 +1,6 @@
+@GerKiss_HostAddress = http://localhost:5140
+
+GET {{GerKiss_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
