@@ -91,7 +91,7 @@ namespace GerKiss.Services
             var token = GenerateToken(user);
             var claims = await _userManager.GetClaimsAsync(user);
             var nomeClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
-            var nome= nomeClaim?.Value;
+            var nome = nomeClaim?.Value;
 
             return new UsuarioSigninRespModel
             {
@@ -107,14 +107,14 @@ namespace GerKiss.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["TokenConfigurations:SecretKey"]);
 
-           tokenHandler.ValidateToken(token, new TokenValidationParameters
-           {
-               ValidateIssuerSigningKey = true,
-               IssuerSigningKey = new SymmetricSecurityKey(key),
-               ValidateIssuer = false,
-               ValidateAudience = false,
-               ValidateLifetime = true
-           }, out SecurityToken validatedToken);
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true
+            }, out SecurityToken validatedToken);
 
             var jwtToken = (JwtSecurityToken)validatedToken;
             var email = jwtToken.Claims.First(x => x.Type == ClaimTypes.Email).Value;
@@ -156,5 +156,17 @@ namespace GerKiss.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+
+        public List<UsuarioModel> BuscarTodosUsuarios()
+        {
+            return _bancoContext.Usuarios.ToList();
+        }
+
+
+        public UsuarioModel BuscarUsuarioPorId(int id)
+        {
+            return _bancoContext.Usuarios.Find(id);
+        }
+
     }
 }

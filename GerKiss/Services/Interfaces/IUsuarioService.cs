@@ -9,5 +9,10 @@ namespace GerKiss.Services.Interfaces
         Task<UsuarioSigninRespModel> Signin(UsuarioSigninModel usuario);
         Task<UsuarioSigninRespModel> validateToken(string token);
         void Adicionar(UsuarioSignupModel usuario);
+        UsuarioModel BuscarUsuarioPorId(int id);
+
+        List<UsuarioModel> BuscarTodosUsuarios();
+
+
     }
 }

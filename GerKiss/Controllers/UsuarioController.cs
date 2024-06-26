@@ -123,5 +123,41 @@ namespace GerKiss.Controllers
                 return BadRequest(new ValidationResultModel(400, errors));
             }
         }
+
+        [HttpGet("usuarios")]
+        public IActionResult GetAllUsers()
+        {
+            try
+            {
+                var usuarios = _usuarioService.BuscarTodosUsuarios();
+                return Ok(usuarios);
+            }
+            catch (Exception ex)
+            {
+                var errors = new List<ValidationError> { new ValidationError(ex.Message) };
+                return BadRequest(new ValidationResultModel(400, errors));
+            }
+        }
+
+
+        [HttpGet("{id}")]
+        public IActionResult Get([FromRoute] int id)
+        {
+            try
+            {
+                var usuario = _usuarioService.BuscarUsuarioPorId(id);
+                if (usuario == null)
+                {
+                    return NotFound(new { message = "Usuário não encontrado." });
+                }
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                var errors = new List<ValidationError> { new ValidationError(ex.Message) };
+                return BadRequest(new ValidationResultModel(400, errors));
+            }
+        }
+
     }
 }
